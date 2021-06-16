@@ -2,7 +2,7 @@
 import { Handler, HandlerContext, HandlerEvent } from "@netlify/functions";
 import fetch from 'node-fetch';
 import { v4 as uuidv4 } from 'uuid';
-import { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID } from "./env-check";
+import { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, SITE_DOMAIN } from "./env-check";
 import { bodyInterface } from "./interface/body";
 
 
@@ -10,6 +10,7 @@ import { bodyInterface } from "./interface/body";
 const apiURL = `${BUX_BASE_URL}/open/checkout`
 
 const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => {
+  
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -18,6 +19,14 @@ const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => 
     };
   }
   
+  if (event.headers.host !== SITE_DOMAIN){
+     return {
+          statusCode: 403,
+          body: JSON.stringify({ error: "Forbidden Access To Api" }),
+          headers: { Allow: "POST" },
+        };
+  }
+         
   let params = null;
   try {
     params =  JSON.parse(event.body|| '{}');

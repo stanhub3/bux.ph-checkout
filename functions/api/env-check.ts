@@ -1,6 +1,6 @@
 require('dotenv').config()
 // TODO: cp .env.example .env , and set your Bux.ph Credentials
-const { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_API_SECRET } = process.env;
+const { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_API_SECRET, SITE_DOMAIN } = process.env;
 
 if (!BUX_API_KEY)
   throw new Error("SET BUX API KEY");
@@ -13,5 +13,8 @@ if (!BUX_CLIENT_ID)
   
 if (!BUX_API_SECRET)
   throw new Error("SET BUX SECRET KEY");
-export { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_API_SECRET };
 
+if (!SITE_DOMAIN)
+throw new Error("SET SITE DOMAIN");
+
+export { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_API_SECRET, SITE_DOMAIN };
