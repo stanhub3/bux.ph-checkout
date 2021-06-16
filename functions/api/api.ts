@@ -6,7 +6,6 @@ import { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, SITE_DOMAIN } from "./env-che
 import { bodyInterface } from "./interface/body";
 
 
-// TODO: set your API URL ENDPOINT
 const apiURL = `${BUX_BASE_URL}/open/checkout`
 
 const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => {
@@ -38,7 +37,6 @@ const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => 
       body: JSON.stringify({ msg: error.message }),
     }
   }
-  // TODO: Define All Parameters  You Need To Pass On Client Side
   const {
     amount, 
     description, 
@@ -53,6 +51,14 @@ const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => 
     contact: string, 
     name: string
   } = params;
+
+  if (!amount || !description || !email || !contact||!name) {
+    let error = {
+      statusCode: 422,
+      body: `Validation Error: amount: ${amount}, description: ${description}, email: ${email}, contact: ${contact}, name: ${name}`,
+    };
+    return error;
+  }
   
   const body: bodyInterface = {
     "req_id": uuidv4(),

@@ -1,4 +1,3 @@
-// TODO: Update Your Payload Scheme For API
 export interface bodyInterface {
     req_id: string
     client_id: string

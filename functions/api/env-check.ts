@@ -1,5 +1,4 @@
 require('dotenv').config()
-// TODO: cp .env.example .env , and set your Bux.ph Credentials
 const { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_API_SECRET, SITE_DOMAIN } = process.env;
 
 if (!BUX_API_KEY)
