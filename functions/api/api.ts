@@ -2,7 +2,7 @@
 import { Handler, HandlerContext, HandlerEvent } from "@netlify/functions";
 import fetch from 'node-fetch';
 import { v4 as uuidv4 } from 'uuid';
-import { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, SITE_DOMAIN } from "./env-check";
+import { BUX_API_KEY, BUX_BASE_URL, BUX_CLIENT_ID, BUX_NOTIFY_URL, BUX_REDIRECT_URL, SITE_DOMAIN } from "./env-check";
 import { bodyInterface } from "./interface/body";
 
 
@@ -42,14 +42,18 @@ const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => 
     description, 
     email,
     contact,
-    name
+    name,
+    param1 = '',
+    param2 = ''
   } : 
   {
     amount: number, 
     description: string , 
     email: string, 
     contact: string, 
-    name: string
+    name: string,
+    param1: string,
+    param2: string,
   } = params;
 
   if (!amount || !description || !email || !contact||!name) {
@@ -69,10 +73,10 @@ const handler: Handler = async (event:HandlerEvent, context:HandlerContext ) => 
     "email": email,
     "contact": contact,
     "name": name,
-    "notification_url": "https://example.ph/bux_notif/",
-    "redirect_url": "https://example.ph/sample_redirect/" ,
-    "param1": "test param1",
-    "param2": "test param2"
+    "notification_url": `${BUX_NOTIFY_URL}`,
+    "redirect_url": `${BUX_REDIRECT_URL}`,
+    "param1": param1,
+    "param2": param2,
   };
 
   const payload = {
