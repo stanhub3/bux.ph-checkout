@@ -11,4 +11,4 @@ export interface bodyInterface {
     redirect_url: string
     param1: string
     param2: string
-  }
+}
